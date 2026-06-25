@@ -1,8 +1,15 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, Pressable, Text, TextInput, View } from "react-native";
-import { API_URL } from "../src/config/api";
+import {
+  Alert,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+  TextInputProps,
+} from "react-native";
+import { apiFetch } from "../src/lib/api";
 import { setToken, setUser } from "../src/lib/session";
 
 export default function RegisterScreen() {
@@ -14,22 +21,34 @@ export default function RegisterScreen() {
   const [loading, setLoading] = useState(false);
 
   async function handleRegister() {
-    if (!name.trim() || !email.trim() || !password.trim()) {
+    const nameFormatted = name.trim();
+    const emailFormatted = email.trim().toLowerCase();
+    const passwordFormatted = password.trim();
+
+    if (!nameFormatted || !emailFormatted || !passwordFormatted) {
       Alert.alert("Atenção", "Preencha nome, e-mail e senha.");
       return;
     }
 
+    if (!isValidEmail(emailFormatted)) {
+      Alert.alert("Erro", "E-mail inválido.");
+      return;
+    }
+
+    if (passwordFormatted.length < 6) {
+      Alert.alert("Atenção", "A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
+
     setLoading(true);
+
     try {
-      const res = await fetch(`${API_URL}/api/auth/register`, {
+      const res = await apiFetch("/api/auth/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          password,
+          name: nameFormatted,
+          email: emailFormatted,
+          password: passwordFormatted,
         }),
       });
 
@@ -44,11 +63,17 @@ export default function RegisterScreen() {
       await setUser(data.user);
 
       router.replace("/");
-    } catch {
+    } catch (error) {
+      console.log("Register error:", error);
       Alert.alert("Erro", "Não foi possível criar a conta.");
     } finally {
       setLoading(false);
     }
+  }
+
+  function isValidEmail(email: string) {
+    const emailRagex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRagex.test(email);
   }
 
   return (
@@ -110,6 +135,7 @@ export default function RegisterScreen() {
           onChangeText={setEmail}
           placeholder="Digite seu e-mail"
           autoCapitalize="none"
+          keyboardType="email-address"
         />
 
         <Field
@@ -151,7 +177,11 @@ export default function RegisterScreen() {
   );
 }
 
-function Field(props: any) {
+type FieldProps = TextInputProps & {
+  label: string;
+};
+
+function Field(props: FieldProps) {
   return (
     <View style={{ gap: 6 }}>
       <Text style={{ fontWeight: "700", color: "#333" }}>{props.label}</Text>
