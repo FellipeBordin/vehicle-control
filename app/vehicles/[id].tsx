@@ -11,13 +11,9 @@ import { formatBRL, formatDate } from "../../src/utils/formatters";
 import { Card } from "../../src/components/common/Card";
 import { getProfitStyle } from "../../src/utils/VehicleHelpers";
 
-import { MaterialIcons } from "@expo/vector-icons";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
-import {
-  deleteVehicleById,
-  getVehicleById,
-} from "../../src/service/vehicleService";
+import { deleteVehicleById, getVehicleById,} from "../../src/service/vehicleService";
 import {
   Alert,
   Platform,
@@ -27,6 +23,10 @@ import {
   View,
 } from "react-native";
 import { Button } from "@/src/components/common/Button";
+import { LoadingState } from "@/src/components/common/LoadingState";
+import { EmptyState } from "@/src/components/common/EmptyState";
+import { VehicleHeader } from "@/src/components/vehicle/VehicleHeader";
+import { confirmAction } from "@/src/utils/confirm";
 
 export default function VehicleDetailScreen() {
   const router = useRouter();
@@ -76,30 +76,11 @@ export default function VehicleDetailScreen() {
   function handleDeleteVehicle() {
     if (!vehicle) return;
 
-    if (Platform.OS === "web") {
-      const confirmed = window.confirm(
-        `Tem certeza que deseja excluir "${vehicle.name}"?`,
-      );
-
-      if (confirmed) {
-        deleteVehicle();
-      }
-
-      return;
-    }
-
-    Alert.alert(
-      "Excluir veículo",
-      `Tem certeza que deseja excluir "${vehicle.name}"?`,
-      [
-        { text: "Cancelar", style: "cancel" },
-        {
-          text: "Excluir",
-          style: "destructive",
-          onPress: deleteVehicle,
-        },
-      ],
-    );
+    confirmAction({
+      title: "Excluir veículo",
+      message: `Tem certeza que deseja excluir "${vehicle.name}"?`,
+      onConfirm: deleteVehicle,
+    });
   }
 
   async function deleteVehicle() {
@@ -133,26 +114,11 @@ export default function VehicleDetailScreen() {
   }
 
   function handleDeleteExpense(expenseId: string) {
-    if (Platform.OS === "web") {
-      const confirmed = window.confirm(
-        "Deseja realmente excluir esta despesa?",
-      );
-
-      if (confirmed) {
-        deleteExpense(expenseId);
-      }
-
-      return;
-    }
-
-    Alert.alert("Excluir despesa", "Deseja realmente excluir esta despesa?", [
-      { text: "Cancelar", style: "cancel" },
-      {
-        text: "Excluir",
-        style: "destructive",
-        onPress: () => deleteExpense(expenseId),
-      },
-    ]);
+    confirmAction({
+      title: "Excluir despesa",
+      message: "Tem certeza que deseja excluir esta despesa?",
+      onConfirm: () => deleteExpense(expenseId),
+    });
   }
 
   async function deleteExpense(expenseId: string) {
@@ -184,52 +150,20 @@ export default function VehicleDetailScreen() {
   }
 
   if (loading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 16,
-          backgroundColor: "#f5f5f5",
-        }}
-      >
-        <Text>Carregando...</Text>
-      </View>
-    );
+    return <LoadingState/>;
   }
 
   if (!vehicle) {
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 16,
-          backgroundColor: "#f5f5f5",
-        }}
-      >
-        <Text style={{ fontSize: 16, fontWeight: "700" }}>
-          Veículo não encontrado.
-        </Text>
-
-        <Pressable
-          onPress={() => router.back()}
-          style={{
-            marginTop: 16,
-            backgroundColor: "#111",
-            paddingHorizontal: 18,
-            paddingVertical: 12,
-            borderRadius: 12,
-          }}
-        >
-          <Text style={{ color: "#fff", fontWeight: "800" }}>Voltar</Text>
-        </Pressable>
-      </View>
+      <EmptyState 
+      message="Veículo não encontrado."
+      buttonTitle="Voltar"
+      onPress={() => router.back()}
+      />
     );
-  }
-
+  } 
+    
+   
   const isSold = vehicle.status === "SOLD";
   const profitStyle = getProfitStyle(vehicle.profit);
 
@@ -243,61 +177,11 @@ export default function VehicleDetailScreen() {
       }}
     >
       <Card>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            gap: 12,
-          }}
-        >
-          <View style={{ flexDirection: "row", gap: 12, flex: 1 }}>
-            <View
-              style={{
-                width: 52,
-                height: 52,
-                borderRadius: 14,
-                backgroundColor: isSold ? "#dcfce7" : "#eff6ff",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <MaterialIcons
-                name="directions-car"
-                size={28}
-                color={isSold ? "#15803d" : "#2563eb"}
-              />
-            </View>
-
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 24, fontWeight: "800" }}>
-                {vehicle.name}
-              </Text>
-              <Text style={{ color: "#666", marginTop: 4 }}>
-                Placa: {vehicle.plate}
-              </Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              paddingVertical: 6,
-              paddingHorizontal: 10,
-              borderRadius: 999,
-              backgroundColor: isSold ? "#dcfce7" : "#f3f4f6",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: "800",
-                color: isSold ? "#166534" : "#374151",
-              }}
-            >
-              {isSold ? "Vendido" : "Em estoque"}
-            </Text>
-          </View>
-        </View>
+         <VehicleHeader 
+          name={vehicle.name}
+          plate={vehicle.plate}
+          isSold={isSold}
+          />
 
         <View style={{ flexDirection: "row", gap: 12 }}>
           <MiniInfoCard
