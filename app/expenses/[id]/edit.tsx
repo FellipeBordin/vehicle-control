@@ -4,9 +4,10 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert, Pressable, Text, View } from "react-native";
 import { ExpenseDTO } from "../../../src/types/expense";
-import { Input } from "@/src/components/common/Input";
-import { Card } from "@/src/components/common/Card";
-import { Button } from "@/src/components/common/Button";
+import { buildExpensePayload } from "../../../src/utils/expenseHelpers";
+import { Input } from "../../../src/components/common/Input";
+import { Card } from "../../../src/components/common/Card";
+import { Button } from "../../../src/components/common/Button";
 import {
   getExpenseById,
   updateExpenseById,
@@ -55,10 +56,7 @@ export default function EditExpenseScreen() {
   }
 
   async function saveExpense() {
-    const payload = {
-      note: note.trim(),
-      amount: Number(amount),
-    };
+    const payload = buildExpensePayload(note, amount);
 
     if (!Number.isFinite(payload.amount) || payload.amount <= 0) {
       Alert.alert("Atenção", "Preencha o valor da despesa corretamente.");
