@@ -7,8 +7,8 @@ import { Button } from "@/src/components/common/Button";
 import { Card } from "@/src/components/common/Card";
 import { Input } from "@/src/components/common/Input";
 import { validateRegister } from "@/src/utils/authValidators";
-import { apiFetch } from "../src/lib/api";
-import { setToken, setUser } from "../src/lib/session";
+import { apiFetch } from "@/src/lib/api";
+import { setToken, setUser } from "@/src/lib/session";
 
 export default function RegisterScreen() {
   const router = useRouter();

@@ -2,8 +2,11 @@ import { useCallback, useState } from "react";
 import { Alert } from "react-native";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 
-import { Vehicle } from "@/src/types/veicles";
-import {deleteVehicleById,getVehicleById,} from "@/src/service/vehicleService";
+import { Vehicle } from "@/src/types/vehicles";
+import {
+  deleteVehicleById,
+  getVehicleById,
+} from "@/src/service/vehicleService";
 import { deleteExpenseById } from "@/src/service/expenseService";
 
 export function useVehicleDetail() {
