@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Radius } from "@/src/styles/radius";
 import { Spacing } from "@/src/styles/spacing";
 import { Theme } from "@/src/styles/theme";
+import { Typography } from "@/src/styles/typography";
 
 type ScreenHeaderProps = {
   icon: keyof typeof MaterialIcons.glyphMap;
@@ -49,14 +50,12 @@ const styles = StyleSheet.create({
 
   title: {
     color: Theme.textPrimary,
-    fontSize: 24,
-    fontWeight: "800",
+    ...Typography.cardTitle,
   },
 
   subtitle: {
     color: Theme.textSecondary,
-    fontSize: 14,
-    lineHeight: 20,
+    ...Typography.body,
     marginTop: Spacing.xs,
   },
 });

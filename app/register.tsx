@@ -109,12 +109,13 @@ export default function RegisterScreen() {
         <Button
           title="Criar conta"
           loadingTitle="Criando..."
+          icon="person-add"
           loading={loading}
           onPress={handleRegister}
         />
       </Card>
 
-      <Button title="Já tenho conta" onPress={goToLogin} />
+      <Button title="Já tenho conta" variant="ghost" onPress={goToLogin} />
     </View>
   );
 }

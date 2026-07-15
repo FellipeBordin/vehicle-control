@@ -21,7 +21,7 @@ export function VehicleCard({ vehicle, onPress }: VehicleCardProps) {
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => pressed && styles.pressed}
+      style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}
     >
       <Card>
         <View style={styles.header}>
@@ -297,5 +297,8 @@ const styles = StyleSheet.create({
     color: Theme.textSecondary,
     fontSize: 13,
     fontWeight: "700",
+  },
+  pressable: {
+    borderRadius: Radius.xl,
   },
 });

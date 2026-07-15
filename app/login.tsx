@@ -75,6 +75,7 @@ export default function LoginScreen() {
 
         <Input
           label="E-mail"
+          icon="mail-outline"
           value={email}
           onChangeText={setEmail}
           placeholder="Digite seu e-mail"
@@ -84,6 +85,7 @@ export default function LoginScreen() {
 
         <Input
           label="Senha"
+          icon="lock-outline"
           value={password}
           onChangeText={setPassword}
           placeholder="Digite sua senha"
@@ -93,6 +95,7 @@ export default function LoginScreen() {
         <Button
           title="Entrar"
           loadingTitle="Entrando..."
+          icon="login"
           loading={loading}
           onPress={handleLogin}
         />
@@ -100,11 +103,11 @@ export default function LoginScreen() {
 
       <Button
         title="Esqueci minha senha"
+        variant="ghost"
         onPress={goToForgotPassword}
-        variant="primary"
       />
 
-      <Button title="Criar conta" onPress={goToRegister} variant="success" />
+      <Button title="Criar conta" variant="secondary" onPress={goToRegister} />
     </ScreenContainer>
   );
 }

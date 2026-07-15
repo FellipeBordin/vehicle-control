@@ -1,54 +1,73 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
 
+import { Button } from "./Button";
+
 import { Radius } from "@/src/styles/radius";
 import { Spacing } from "@/src/styles/spacing";
 import { Theme } from "@/src/styles/theme";
+import { Typography } from "@/src/styles/typography";
 
 type ErrorStateProps = {
+  title?: string;
   message: string;
+  buttonTitle?: string;
+  onRetry?: () => void;
 };
 
-export function ErrorState({ message }: ErrorStateProps) {
+export function ErrorState({
+  title = "Algo deu errado",
+  message,
+  buttonTitle,
+  onRetry,
+}: ErrorStateProps) {
   return (
     <View style={styles.container}>
-      <MaterialIcons name="error-outline" size={22} color={Theme.dangerDark} />
-
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>Não foi possível carregar</Text>
-        <Text style={styles.message}>{message}</Text>
+      <View style={styles.iconContainer}>
+        <MaterialIcons name="error-outline" size={42} color={Theme.danger} />
       </View>
+
+      <Text style={styles.title}>{title}</Text>
+
+      <Text style={styles.message}>{message}</Text>
+
+      {buttonTitle && onRetry ? (
+        <Button
+          title={buttonTitle}
+          icon="refresh"
+          variant="secondary"
+          onPress={onRetry}
+        />
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
+    paddingVertical: Spacing.xxl,
     gap: Spacing.md,
-    backgroundColor: Theme.dangerLight,
-    borderWidth: 1,
-    borderColor: Theme.dangerBorder,
-    borderRadius: Radius.lg,
-    padding: Spacing.md,
-    marginTop: Spacing.md,
   },
 
-  textContainer: {
-    flex: 1,
+  iconContainer: {
+    width: 86,
+    height: 86,
+    borderRadius: Radius.full,
+    backgroundColor: Theme.dangerLight,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   title: {
-    color: Theme.dangerDark,
-    fontSize: 14,
-    fontWeight: "800",
+    color: Theme.textPrimary,
+    ...Typography.sectionTitle,
   },
 
   message: {
-    color: Theme.dangerDark,
-    fontSize: 13,
-    lineHeight: 18,
-    marginTop: Spacing.xs,
+    color: Theme.textSecondary,
+    ...Typography.body,
+    textAlign: "center",
+    maxWidth: 300,
   },
 });

@@ -120,7 +120,12 @@ export default function EditExpenseScreen() {
   }
 
   if (loading) {
-    return <LoadingState message="Carregando despesa..." />;
+    return (
+      <LoadingState
+        message="Carregando despesa..."
+        description="Preparando os dados para edição."
+      />
+    );
   }
 
   return (
@@ -150,6 +155,8 @@ export default function EditExpenseScreen() {
         <Button
           title="Salvar alterações"
           loadingTitle="Salvando..."
+          icon="save"
+          variant="primary"
           loading={saving}
           onPress={saveExpense}
         />

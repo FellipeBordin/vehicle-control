@@ -5,6 +5,15 @@ export const Theme = {
 
   surface: Colors.white,
   surfaceMuted: Colors.slate50,
+  surfaceStrong: Colors.slate200,
+
+  border: Colors.slate200,
+  divider: Colors.slate200,
+
+  textPrimary: Colors.slate900,
+  textSecondary: Colors.slate500,
+  textMuted: Colors.slate400,
+  textInverse: Colors.white,
 
   primary: Colors.slate900,
   primaryPressed: Colors.black,
@@ -12,12 +21,6 @@ export const Theme = {
   accent: Colors.blue600,
   accentDark: Colors.blue700,
   accentLight: Colors.blue100,
-
-  textPrimary: Colors.slate900,
-  textSecondary: Colors.slate500,
-  textMuted: Colors.slate400,
-
-  border: Colors.slate200,
 
   success: Colors.green600,
   successDark: Colors.green700,

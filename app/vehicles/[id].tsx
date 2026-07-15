@@ -45,7 +45,12 @@ export default function VehicleDetailScreen() {
   }
 
   if (loading) {
-    return <LoadingState message="Carregando veículo..." />;
+    return (
+      <LoadingState
+        message="Carregando veículo..."
+        description="Buscando informações, despesas e resultado financeiro."
+      />
+    );
   }
 
   if (!vehicle) {
@@ -156,8 +161,8 @@ export default function VehicleDetailScreen() {
 
         <Button
           title="Excluir veículo"
-          loadingTitle="Excluindo..."
           variant="danger"
+          loadingTitle="Excluindo..."
           loading={deleting}
           onPress={handleDeleteVehicle}
         />

@@ -1,5 +1,9 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+
+import { Radius } from "@/src/styles/radius";
+import { Spacing } from "@/src/styles/spacing";
+import { Theme } from "@/src/styles/theme";
 
 type VehicleHeaderProps = {
   name: string;
@@ -8,53 +12,65 @@ type VehicleHeaderProps = {
 };
 
 export function VehicleHeader({ name, plate, isSold }: VehicleHeaderProps) {
+  const statusBackground = isSold ? Theme.successLight : Theme.accentLight;
+
+  const statusColor = isSold ? Theme.successDark : Theme.accentDark;
+
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        gap: 12,
-      }}
-    >
-      <View style={{ flexDirection: "row", gap: 12, flex: 1 }}>
+    <View style={styles.container}>
+      <View style={styles.vehicleInfo}>
         <View
-          style={{
-            width: 52,
-            height: 52,
-            borderRadius: 14,
-            backgroundColor: isSold ? "#dcfce7" : "#eff6ff",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          style={[
+            styles.iconContainer,
+            {
+              backgroundColor: statusBackground,
+            },
+          ]}
         >
-          <MaterialIcons
-            name="directions-car"
-            size={28}
-            color={isSold ? "#15803d" : "#2563eb"}
-          />
+          <MaterialIcons name="directions-car" size={28} color={statusColor} />
         </View>
 
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 24, fontWeight: "800" }}>{name}</Text>
-          <Text style={{ color: "#666", marginTop: 4 }}>Placa: {plate}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.name} numberOfLines={1}>
+            {name}
+          </Text>
+
+          <View style={styles.plateContainer}>
+            <MaterialIcons
+              name="confirmation-number"
+              size={15}
+              color={Theme.textMuted}
+            />
+
+            <Text style={styles.plate}>{plate}</Text>
+          </View>
         </View>
       </View>
 
       <View
-        style={{
-          paddingVertical: 6,
-          paddingHorizontal: 10,
-          borderRadius: 999,
-          backgroundColor: isSold ? "#dcfce7" : "#f3f4f6",
-        }}
+        style={[
+          styles.statusBadge,
+          {
+            backgroundColor: statusBackground,
+          },
+        ]}
       >
+        <View
+          style={[
+            styles.statusDot,
+            {
+              backgroundColor: statusColor,
+            },
+          ]}
+        />
+
         <Text
-          style={{
-            fontSize: 12,
-            fontWeight: "800",
-            color: isSold ? "#166534" : "#374151",
-          }}
+          style={[
+            styles.statusText,
+            {
+              color: statusColor,
+            },
+          ]}
         >
           {isSold ? "Vendido" : "Em estoque"}
         </Text>
@@ -62,3 +78,72 @@ export function VehicleHeader({ name, plate, isSold }: VehicleHeaderProps) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: Spacing.md,
+  },
+
+  vehicleInfo: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+  },
+
+  iconContainer: {
+    width: 56,
+    height: 56,
+    borderRadius: Radius.lg,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  textContainer: {
+    flex: 1,
+  },
+
+  name: {
+    color: Theme.textPrimary,
+    fontSize: 24,
+    lineHeight: 30,
+    fontWeight: "900",
+  },
+
+  plateContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+    marginTop: Spacing.xs,
+  },
+
+  plate: {
+    color: Theme.textSecondary,
+    fontSize: 14,
+    fontWeight: "700",
+    letterSpacing: 0.4,
+  },
+
+  statusBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+    paddingVertical: 7,
+    paddingHorizontal: Spacing.sm,
+    borderRadius: Radius.full,
+  },
+
+  statusDot: {
+    width: 7,
+    height: 7,
+    borderRadius: Radius.full,
+  },
+
+  statusText: {
+    fontSize: 12,
+    fontWeight: "800",
+  },
+});

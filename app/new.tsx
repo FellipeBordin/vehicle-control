@@ -93,15 +93,17 @@ export default function NewVehicle() {
 
         <Input
           label="Placa"
+          icon="confirmation-number"
           value={plate}
           onChangeText={setPlate}
-          placeholder="Digite a placa do veículo"
+          placeholder="Digite a placa"
           autoCapitalize="characters"
           onBlur={() => setPlate((plate) => plate.trim().toUpperCase())}
         />
 
         <Input
           label="Preço de compra"
+          icon="attach-money"
           value={purchasePrice}
           onChangeText={setPurchasePrice}
           placeholder="Digite o valor pago pelo veículo"
@@ -128,10 +130,11 @@ export default function NewVehicle() {
           loadingTitle="Salvando..."
           loading={loading}
           onPress={save}
+          variant="primary"
         />
       </Card>
 
-      <Button title="Voltar" onPress={() => router.back()} />
+      <Button title="Voltar" onPress={() => router.back()} variant="ghost" />
     </ScreenContainer>
   );
 }

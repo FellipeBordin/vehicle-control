@@ -1,14 +1,14 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import {Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 import { apiFetch } from "../../../src/lib/api";
 import { Input } from "@/src/components/common/Input";
 import { Card } from "@/src/components/common/Card";
 import { ScreenContainer } from "@/src/components/common/ScreenContainer";
 import { Button } from "@/src/components/common/Button";
-import {showAlert} from "@/src/utils/alert";
+import { showAlert } from "@/src/utils/alert";
 
 export default function NewExpenseScreen() {
   const router = useRouter();
@@ -108,6 +108,7 @@ export default function NewExpenseScreen() {
         <Button
           title="Salvar despesa"
           loadingTitle="Salvando..."
+          icon="save"
           onPress={saveExpense}
           loading={loading}
         />

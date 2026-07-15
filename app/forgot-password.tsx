@@ -93,6 +93,7 @@ export default function ForgotPasswordScreen() {
         <Button
           title="Salvar nova senha"
           loadingTitle="Salvando..."
+          icon="save"
           loading={loading}
           onPress={handleResetPassword}
         />
@@ -100,6 +101,7 @@ export default function ForgotPasswordScreen() {
 
       <Button
         title="Voltar para login"
+        variant="ghost"
         onPress={() => router.replace("/login")}
       />
     </ScreenContainer>

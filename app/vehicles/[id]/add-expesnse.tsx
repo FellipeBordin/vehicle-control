@@ -98,6 +98,7 @@ export default function AddExpenseScreen() {
         <Button
           title="Salvar despesa"
           loadingTitle="Salvando..."
+          icon="save"
           loading={loading}
           onPress={saveExpense}
         />
