@@ -74,6 +74,7 @@ export const DarkTheme = {
   shadow: Colors.black,
 } as const;
 
-export type AppTheme = typeof LightTheme;
+export type AppTheme = Record<keyof typeof LightTheme, string>;
 
+// Compatibilidade temporária com os arquivos antigos
 export const Theme = LightTheme;

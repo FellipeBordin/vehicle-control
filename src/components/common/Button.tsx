@@ -1,5 +1,4 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { useMemo } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -48,7 +47,6 @@ export function Button({
 }: ButtonProps) {
   const { theme } = useAppTheme();
 
-  const styles = useMemo(() => createStyles(theme), [theme]);
   const variantColors = getVariantColors(theme);
   const colors = variantColors[variant];
 
@@ -83,10 +81,21 @@ export function Button({
         {loading ? (
           <ActivityIndicator size="small" color={colors.text} />
         ) : icon ? (
-          <MaterialIcons name={icon} size={18} color={colors.text} />
+          <MaterialIcons
+            name={icon}
+            size={18}
+            color={colors.text}
+          />
         ) : null}
 
-        <Text style={[styles.text, { color: colors.text }]}>
+        <Text
+          style={[
+            styles.text,
+            {
+              color: colors.text,
+            },
+          ]}
+        >
           {loading ? loadingTitle ?? "Carregando..." : title}
         </Text>
       </View>
@@ -130,34 +139,32 @@ function getVariantColors(
   };
 }
 
-function createStyles(theme: AppTheme) {
-  return StyleSheet.create({
-    button: {
-      minHeight: 46,
-      marginTop: Spacing.xs,
-      paddingVertical: Spacing.md,
-      paddingHorizontal: Spacing.lg,
-      borderRadius: Radius.lg,
-      borderWidth: 1,
-      alignItems: "center",
-      justifyContent: "center",
-    },
+const styles = StyleSheet.create({
+  button: {
+    minHeight: 46,
+    marginTop: Spacing.xs,
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.lg,
+    borderRadius: Radius.lg,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-    ghostButton: {
-      minHeight: 40,
-      paddingVertical: Spacing.sm,
-    },
+  ghostButton: {
+    minHeight: 40,
+    paddingVertical: Spacing.sm,
+  },
 
-    content: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: Spacing.sm,
-    },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: Spacing.sm,
+  },
 
-    text: {
-      ...Typography.button,
-      textAlign: "center",
-    },
-  });
-}
+  text: {
+    ...Typography.button,
+    textAlign: "center",
+  },
+});
