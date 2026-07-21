@@ -1,25 +1,69 @@
 # 🚗 Vehicle Control
 
-Aplicativo mobile desenvolvido com React Native e Expo para gerenciamento completo de compra, despesas e venda de veículos.
+Aplicativo mobile desenvolvido com **React Native + Expo** para gerenciamento completo de compra, despesas e venda de veículos.
 
-O sistema permite controlar todo o ciclo de negociação, registrando investimentos, despesas e lucro de cada veículo por meio de uma interface simples e organizada.
+O projeto foi desenvolvido para auxiliar pequenos lojistas e revendedores a controlar todo o ciclo de negociação dos veículos, desde a compra até a venda, calculando automaticamente investimentos, despesas e lucro de cada operação.
 
 ---
 
-## 📱 Funcionalidades
+## 📱 Demonstração
+
+> Adicione aqui um GIF ou vídeo do aplicativo.
+
+### Telas
+
+- Login
+- Cadastro
+- Recuperação de senha
+- Dashboard
+- Lista de veículos
+- Detalhes do veículo
+- Cadastro de despesas
+- Venda de veículo
+- Configurações (Tema)
+
+---
+
+## ✨ Funcionalidades
+
+### 🔐 Autenticação
 
 - ✅ Cadastro de usuários
-- ✅ Login e autenticação
+- ✅ Login com autenticação JWT
 - ✅ Recuperação de senha
+- ✅ Sessão persistente
+- ✅ Logout
+
+---
+
+### 🚗 Gerenciamento de veículos
+
 - ✅ Cadastro de veículos
-- ✅ Controle de despesas
-- ✅ Edição de despesas
-- ✅ Exclusão de despesas
+- ✅ Edição de veículos
 - ✅ Exclusão de veículos
 - ✅ Marcar veículo como vendido
-- ✅ Cálculo automático de investimento
-- ✅ Cálculo automático de lucro/prejuízo
-- ✅ Dashboard com resumo financeiro
+
+---
+
+### 💰 Controle financeiro
+
+- ✅ Cadastro de despesas
+- ✅ Edição de despesas
+- ✅ Exclusão de despesas
+- ✅ Cálculo automático do investimento total
+- ✅ Cálculo automático de lucro ou prejuízo
+- ✅ Dashboard financeiro
+
+---
+
+### 🎨 Interface
+
+- ✅ Tema Claro
+- ✅ Tema Escuro
+- ✅ Tema Sistema (segue o dispositivo)
+- ✅ Preferência de tema salva automaticamente
+- ✅ Componentes reutilizáveis
+- ✅ Design responsivo
 - ✅ Estados de Loading
 - ✅ Empty State
 - ✅ Error State
@@ -28,28 +72,51 @@ O sistema permite controlar todo o ciclo de negociação, registrando investimen
 
 ## 🛠 Tecnologias
 
+### Mobile
+
 - React Native
 - Expo SDK 54
-- TypeScript
 - Expo Router
-- React Hooks
-- REST API
+- TypeScript
+
+### Backend
+
+- Next.js
+- Node.js
+- Prisma ORM
+- PostgreSQL (Neon)
+
+### Autenticação
+
+- JWT
+
+### Armazenamento
+
+- AsyncStorage
+
+### Estilização
+
+- StyleSheet
 - Context API
-- Design System próprio
+- Theme Provider
 
 ---
 
-## 🏗 Arquitetura
+## 📂 Estrutura do projeto
 
-O projeto foi estruturado seguindo separação de responsabilidades.
-
+```text
 src
 │
 ├── components
-│ ├── common
-│ └── vehicle
+│   ├── common
+│   ├── vehicle
+│   └── settings
+│
+├── contexts
 │
 ├── hooks
+│
+├── lib
 │
 ├── services
 │
@@ -57,78 +124,83 @@ src
 │
 ├── types
 │
-├── utils
-│
-└── lib
+└── utils
+```
 
 ---
 
-## 🎨 Design System
+## 🎯 Arquitetura
 
-Foi desenvolvido um Design System reutilizável contendo:
+O projeto foi organizado seguindo princípios de componentização e separação de responsabilidades.
 
-- Theme
-- Colors
-- Typography
-- Radius
-- Spacing
+- Componentes reutilizáveis
+- Hooks personalizados
+- Context API
+- Helpers
+- Services
+- Tipagem com TypeScript
+- Design System
+- Tema dinâmico
 
-Além dos componentes reutilizáveis:
+---
 
-- Button
-- Input
-- Card
-- ScreenContainer
-- ScreenHeader
-- LoadingState
-- EmptyState
-- ErrorState
+## 📸 Screenshots
+
+### Home Page
+
+![Home](./assets/screenshots/Home.png)
+
+### Detalhe de Veiculo
+
+![Detalhe](./assets/screenshots/detalheveiculo.png)
+
+### Despesas do Veiculo
+
+![Despesas](./assets/screenshots/despesas.png)
+
+### Adicionar Despesas
+
+![Add-despesas](./assets/screenshots/add-despesas.png)
+
+### Adicionar novo Veiculo
+
+![Novo-Veiculo](./assets/screenshots/novoveiculo.png)
+
+---
 
 ## 🚀 Como executar
 
 ```bash
-git clone https://github.com/FellipeBordin/mobile-veicles
+git clone https://github.com/FellipeBordin/mobile-veicles.git
+```
 
-cd mobile-veicles
+```bash
+cd mobile-expo
+```
 
+```bash
 npm install
+```
 
+```bash
 npx expo start
 ```
 
 ---
 
-## 💡 Principais aprendizados
+## 📌 Próximas melhorias
 
-Durante o desenvolvimento foram aplicados conceitos como:
-
-- Componentização
-- Hooks personalizados
-- Reutilização de código
-- Services
-- Organização em camadas
-- Clean Code
-- TypeScript
-- UX
-- Design System
-- Refatoração
+- [ ] Perfil do usuário
+- [ ] Filtros de veículos
+- [ ] Pesquisa por placa
+- [ ] Exportação de relatórios
+- [ ] Upload de imagens dos veículos
 
 ---
 
-## 🔨 Próximas melhorias
-
-- Upload de fotos dos veículos
-- Dashboard com gráficos
-- Exportação de relatórios
-- Filtros avançados
-- Dark Mode
-- Notificações
-- Backup em nuvem
-
----
-
-## 👨‍💻 Autor
+## 👨‍💻 Desenvolvido por
 
 **Fellipe Bordin**
 
-- LinkedIn: https://www.linkedin.com/in/fellipe-bordin/
+- GitHub: https://github.com/FellipeBordin
+- LinkedIn: _(adicione seu perfil aqui)_
