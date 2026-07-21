@@ -9,11 +9,13 @@ type HomeHeaderProps = {
   userName: string;
   onNewVehicle: () => void;
   onLogout: () => void;
+  onSettings: () => void;
 };
 
 export function HomeHeader({
   userName,
   onNewVehicle,
+  onSettings,
   onLogout,
 }: HomeHeaderProps) {
   const { theme } = useAppTheme();
@@ -58,10 +60,13 @@ export function HomeHeader({
       <View style={styles.actions}>
         <Pressable
           onPress={onNewVehicle}
+          accessibilityRole="button"
+          accessibilityLabel="Cadastrar novo veículo"
           style={({ pressed }) => [
             styles.iconButton,
             {
               backgroundColor: theme.primary,
+              borderColor: theme.primary,
             },
             pressed && styles.pressed,
           ]}
@@ -70,7 +75,25 @@ export function HomeHeader({
         </Pressable>
 
         <Pressable
+          onPress={onSettings}
+          accessibilityRole="button"
+          accessibilityLabel="Abrir configurações"
+          style={({ pressed }) => [
+            styles.iconButton,
+            {
+              backgroundColor: theme.surfaceMuted,
+              borderColor: theme.border,
+            },
+            pressed && styles.pressed,
+          ]}
+        >
+          <MaterialIcons name="settings" size={21} color={theme.textPrimary} />
+        </Pressable>
+
+        <Pressable
           onPress={onLogout}
+          accessibilityRole="button"
+          accessibilityLabel="Sair da conta"
           style={({ pressed }) => [
             styles.iconButton,
             {

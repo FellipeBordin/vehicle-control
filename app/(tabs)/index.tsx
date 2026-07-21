@@ -38,6 +38,7 @@ export default function VehiclesHome() {
         userName={userName}
         onNewVehicle={() => router.push("/new")}
         onLogout={handleLogout}
+        onSettings={() => router.push("/settings")}
       />
 
       <VehicleSummary summary={summary} />

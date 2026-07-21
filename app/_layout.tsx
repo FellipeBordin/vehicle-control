@@ -1,12 +1,7 @@
 import { Stack, usePathname, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 import { ThemeProvider, useAppTheme } from "@/src/contexts/ThemeContexte";
 import { getToken } from "@/src/lib/session";
@@ -28,7 +23,7 @@ function AuthLayout() {
 
   const [loading, setLoading] = useState(true);
 
-  const styles = createStyles(theme);
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
   useEffect(() => {
     let mounted = true;
@@ -53,6 +48,12 @@ function AuthLayout() {
         if (loggedIn && isAuthPage) {
           router.replace("/");
         }
+      } catch (error) {
+        console.error("Erro ao verificar autenticação:", error);
+
+        if (mounted) {
+          router.replace("/login");
+        }
       } finally {
         if (mounted) {
           setLoading(false);
@@ -60,7 +61,7 @@ function AuthLayout() {
       }
     }
 
-    checkAuth();
+    void checkAuth();
 
     return () => {
       mounted = false;
@@ -73,14 +74,9 @@ function AuthLayout() {
         <StatusBar style={isDark ? "light" : "dark"} />
 
         <View style={styles.loadingContainer}>
-          <ActivityIndicator
-            size="large"
-            color={theme.accent}
-          />
+          <ActivityIndicator size="large" color={theme.accent} />
 
-          <Text style={styles.loadingText}>
-            Carregando...
-          </Text>
+          <Text style={styles.loadingText}>Carregando...</Text>
         </View>
       </>
     );
@@ -101,8 +97,11 @@ function AuthLayout() {
         <Stack.Screen name="login" />
         <Stack.Screen name="register" />
         <Stack.Screen name="forgot-password" />
+
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="new" />
+        <Stack.Screen name="settings" />
+
         <Stack.Screen name="vehicles/[id]" />
         <Stack.Screen name="vehicles/[id]/expense" />
         <Stack.Screen name="vehicles/[id]/sell" />
@@ -112,7 +111,7 @@ function AuthLayout() {
   );
 }
 
-function createStyles(theme: AppTheme | Record<string, string>) {
+function createStyles(theme: AppTheme) {
   return StyleSheet.create({
     loadingContainer: {
       flex: 1,
